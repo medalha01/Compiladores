@@ -48,7 +48,13 @@ int main()
             current_lexem = "";
             current_token = "";
             character_to_backtrack = '\0';     // Still not handling when we have backtrack!
-            continue;
+
+            if (character_to_backtrack == '\0') {
+                continue;
+            } else {
+                c = character_to_backtrack;
+                character_to_backtrack == '\0';    // And execution continues using the caracter in backtrack.
+            }
         }
 
         completed_process_diagrams = 0;
@@ -68,6 +74,9 @@ int main()
                         current_lexem = result.second.second;
                         character_to_backtrack = '\0';
                     }
+
+                    cout << "TOKEN FOUND: " << current_token << endl; // DEBUG DELETEME
+
                     completed_process_diagrams++;
                     break;
 
@@ -77,6 +86,9 @@ int main()
                         current_lexem = result.second.second;
                         character_to_backtrack = c;
                     }
+                    
+                    cout << "TOKEN FOUND: " << current_token << endl; // DEBUG DELETEME
+
                     completed_process_diagrams++;
                     break;
 
@@ -84,6 +96,9 @@ int main()
                     if (current_token == "") {
                         current_token = result.second.first;
                     }
+
+                    cout << "TOKEN FOUND: " << current_token << endl; // DEBUG DELETEME
+
                     completed_process_diagrams++;
                     break;
 
