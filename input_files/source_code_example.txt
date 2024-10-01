@@ -1,7 +1,9 @@
-def f (int a) {
+def f () {
 
-x = x + a;
+  int a;
 
-return;
+  a = 5 + 3.9;
+
+  return;
 
 }
