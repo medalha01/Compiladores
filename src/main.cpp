@@ -31,7 +31,29 @@ int main()
     string current_token = "";
     char character_to_backtrack = '\0';
     pair<DiagramProcessing, pair<string, string>> result;
+    bool is_processing = false;
+    size_t number_diagrams = diagrams.size();
+    size_t completed_process_diagrams;
     while (inputFile.get(c)) {  // PS, necessário tratar o EOF? --> DIAGRAMas rodando podem não terminar.
+
+        if (!is_processing and isspace(c)) {
+            continue;
+        }
+
+        if (completed_process_diagrams == number_diagrams) {
+            is_processing = false;
+            completed_process_diagrams = 0;
+            // Here saves token and/or lexems.
+            outputFile << current_token << " ";
+            current_lexem = "";
+            current_token = "";
+            character_to_backtrack = '\0';     // Still not handling when we have backtrack!
+            continue;
+        }
+
+        completed_process_diagrams = 0;
+        is_processing = true;
+
         for (auto& diagram : diagrams) {
             result = diagram->parse(c);
            
@@ -46,6 +68,7 @@ int main()
                         current_lexem = result.second.second;
                         character_to_backtrack = '\0';
                     }
+                    completed_process_diagrams++;
                     break;
 
                 case FINISHED_AND_BACKTRACK:
@@ -54,16 +77,18 @@ int main()
                         current_lexem = result.second.second;
                         character_to_backtrack = c;
                     }
+                    completed_process_diagrams++;
                     break;
 
                 case FAILED:
                     if (current_token == "") {
                         current_token = result.second.first;
                     }
+                    completed_process_diagrams++;
                     break;
 
                 default:
-                    assert(false);  // Should'nt run this.
+                    assert(false);  // Shouldn't run this.
                     break;
             }
         }
