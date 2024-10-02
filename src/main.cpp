@@ -27,14 +27,14 @@ int main()
 
     // Process input file.
     char c;
-    char character_to_backtrack = '\0';
     bool is_processing = false;
+    char character_to_backtrack = '\0';
     size_t completed_process_diagrams;
     size_t number_diagrams = diagrams.size();
     string current_lexem = "";
     string current_token = "";
     pair<DiagramProcessing, pair<string, string>> result;
-    while (inputFile.get(c)) {  // PS, necessário tratar o EOF -> após o processamento, o token não é salvo pois o while acabou! 
+    while (inputFile.get(c)) { 
 
         if (!is_processing and isspace(c)) {
             continue;
@@ -71,7 +71,7 @@ int main()
         completed_process_diagrams = 0;
         is_processing = true;
 
-        cout << "PROCESSANDO " << c << endl;
+        cout << "PROCESSANDO " << c << endl; // DELETEME
 
         for (auto& diagram : diagrams) {
             result = diagram->parse(c);
@@ -112,6 +112,17 @@ int main()
                     break;
             }
         }
+
+        /*  // NÃO FUNCIONA. O último caracter é identificado como OUTRO ao invés de IDENT. --> Ideia: por while (a)
+                                                                                                        a = inputFile.get(c) // Dessa forma dá pra controlar a variável
+        if (inputFile.peek() == EOF) {   // Because in EOF, the while will not run. 
+            cout << "Token: " << current_token << endl;
+            cout << "Lexem: " << current_lexem << endl;
+            cout << endl;
+            outputFile << current_token << " ";
+        }
+        */
+
     }
 
     inputFile.close();
