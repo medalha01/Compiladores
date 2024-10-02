@@ -37,8 +37,8 @@ int main()
     while (inputFile.get(c)) {  // PS, necessário tratar o EOF? --> DIAGRAMas rodando podem não terminar.
 
         if (!is_processing and isspace(c)) {
-            inputFile.seekg(-1, ios::cur);
-            continue;      // Problema: Isso rodou e gastou um caracter do inputFile.
+            //inputFile.seekg(-1, ios::cur);   // Maybe change the 'character_to_backtrack' and use seekg as well!
+            continue;
         }
 
         if (completed_process_diagrams == number_diagrams) {
@@ -67,8 +67,6 @@ int main()
                 inputFile.seekg(-1, ios::cur);
                 c = character_to_backtrack;
                 character_to_backtrack = '\0';    // And execution continues using the caracter in backtrack.
-
-                cout << "RUNNING BACKTRACK!" << endl;
             }
         }
 
@@ -92,9 +90,6 @@ int main()
                         current_lexem = result.second.second;
                         character_to_backtrack = '\0';
                     }
-
-                    //cout << "TOKEN FOUND: " << current_token << endl; // DEBUG DELETEME
-
                     completed_process_diagrams++;
                     break;
 
@@ -109,9 +104,6 @@ int main()
                             character_to_backtrack = c;
                         }
                     }
-                    
-                    //cout << "TOKEN FOUND: " << current_token << endl; // DEBUG DELETEME
-
                     completed_process_diagrams++;
                     break;
 
@@ -119,9 +111,6 @@ int main()
                     if (current_token == "") {
                         current_token = result.second.first;
                     }
-
-                    //cout << "TOKEN FOUND: " << current_token << endl; // DEBUG DELETEME
-
                     completed_process_diagrams++;
                     break;
 
