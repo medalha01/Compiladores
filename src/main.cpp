@@ -34,7 +34,15 @@ int main()
     string current_lexem = "";
     string current_token = "";
     pair<DiagramProcessing, pair<string, string>> result;
-    while (inputFile.get(c)) { 
+    int still_reading_file = 2;
+    while (still_reading_file) { 
+
+        if (inputFile.peek() == EOF) {
+            still_reading_file--;
+            c = ' ';
+        } else {
+            inputFile.get(c);
+        }
 
         if (!is_processing and isspace(c)) {
             continue;
@@ -57,6 +65,10 @@ int main()
                 diagram->reset();
             }
 
+            if (still_reading_file != 2) {  // !!!!
+                still_reading_file = 0;
+                continue;
+            }
 
             if (character_to_backtrack == '\0') {
                 inputFile.seekg(-1, ios::cur);    // Maybe change the 'character_to_backtrack' logic and use seekg as well!
@@ -113,15 +125,7 @@ int main()
             }
         }
 
-        /*  // NÃO FUNCIONA. O último caracter é identificado como OUTRO ao invés de IDENT. --> Ideia: por while (a)
-                                                                                                        a = inputFile.get(c) // Dessa forma dá pra controlar a variável
-        if (inputFile.peek() == EOF) {   // Because in EOF, the while will not run. 
-            cout << "Token: " << current_token << endl;
-            cout << "Lexem: " << current_lexem << endl;
-            cout << endl;
-            outputFile << current_token << " ";
-        }
-        */
+
 
     }
 
