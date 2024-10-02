@@ -37,11 +37,12 @@ int main()
     int still_reading_file = 2;
     while (still_reading_file) { 
 
-        if (inputFile.peek() == EOF) {
+        // To finish the processing when it has not finished but the file ended.
+        if (inputFile.peek() == EOF) {    
             still_reading_file--;
             c = ' ';
         } else {
-            inputFile.get(c);
+            inputFile.get(c); 
         }
 
         if (!is_processing and isspace(c)) {
@@ -52,9 +53,11 @@ int main()
             is_processing = false;
             completed_process_diagrams = 0;
             // Here saves token and/or lexems.
+            /* // JUST FOR DEBUG.
             cout << "Token: " << current_token << endl;
             cout << "Lexem: " << current_lexem << endl;
             cout << endl;
+            */
 
             outputFile << current_token << " ";
             current_lexem = "";
@@ -65,7 +68,7 @@ int main()
                 diagram->reset();
             }
 
-            if (still_reading_file != 2) {  // !!!!
+            if (still_reading_file != 2) {  // To don't duplicate the output when processing has already finish.
                 still_reading_file = 0;
                 continue;
             }
@@ -83,7 +86,7 @@ int main()
         completed_process_diagrams = 0;
         is_processing = true;
 
-        cout << "PROCESSANDO " << c << endl; // DELETEME
+        //cout << "PROCESSANDO " << c << endl; // Just for debug.
 
         for (auto& diagram : diagrams) {
             result = diagram->parse(c);
