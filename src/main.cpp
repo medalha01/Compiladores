@@ -27,17 +27,16 @@ int main()
 
     // Process input file.
     char c;
+    char character_to_backtrack = '\0';
+    bool is_processing = false;
+    size_t completed_process_diagrams;
+    size_t number_diagrams = diagrams.size();
     string current_lexem = "";
     string current_token = "";
-    char character_to_backtrack = '\0';
     pair<DiagramProcessing, pair<string, string>> result;
-    bool is_processing = false;
-    size_t number_diagrams = diagrams.size();
-    size_t completed_process_diagrams;
-    while (inputFile.get(c)) {  // PS, necessário tratar o EOF? --> DIAGRAMas rodando podem não terminar.
+    while (inputFile.get(c)) {  // PS, necessário tratar o EOF -> após o processamento, o token não é salvo pois o while acabou! 
 
         if (!is_processing and isspace(c)) {
-            //inputFile.seekg(-1, ios::cur);   // Maybe change the 'character_to_backtrack' and use seekg as well!
             continue;
         }
 
@@ -51,17 +50,16 @@ int main()
 
             outputFile << current_token << " ";
             current_lexem = "";
-            current_token = "";
-            //character_to_backtrack = '\0';     
+            current_token = "";    
 
-            // reset diagrams
+            // Reset diagrams
             for (auto& diagram : diagrams) {
                 diagram->reset();
             }
 
 
             if (character_to_backtrack == '\0') {
-                inputFile.seekg(-1, ios::cur);
+                inputFile.seekg(-1, ios::cur);    // Maybe change the 'character_to_backtrack' logic and use seekg as well!
                 continue;
             } else {
                 inputFile.seekg(-1, ios::cur);
@@ -73,7 +71,6 @@ int main()
         completed_process_diagrams = 0;
         is_processing = true;
 
-
         cout << "PROCESSANDO " << c << endl;
 
         for (auto& diagram : diagrams) {
@@ -83,7 +80,6 @@ int main()
             {
                 case IN_PROGRESS:
                     break;
-                
                 case FINISHED:
                     if (result.second.second.length() > current_lexem.length()) {
                         current_token = result.second.first;
@@ -92,7 +88,6 @@ int main()
                     }
                     completed_process_diagrams++;
                     break;
-
                 case FINISHED_AND_BACKTRACK:
                     if (result.second.second.length() > current_lexem.length()) {
                         current_token = result.second.first;
@@ -106,14 +101,12 @@ int main()
                     }
                     completed_process_diagrams++;
                     break;
-
                 case FAILED:
                     if (current_token == "") {
                         current_token = result.second.first;
                     }
                     completed_process_diagrams++;
                     break;
-
                 default:
                     assert(false);  // Shouldn't run this.
                     break;
