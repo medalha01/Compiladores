@@ -44,6 +44,10 @@ int main()
             is_processing = false;
             completed_process_diagrams = 0;
             // Here saves token and/or lexems.
+            cout << "Token: " << current_token << endl;
+            cout << "Lexem: " << current_lexem << endl;
+            cout << endl;
+
             outputFile << current_token << " ";
             current_lexem = "";
             current_token = "";
@@ -81,7 +85,7 @@ int main()
                         character_to_backtrack = '\0';
                     }
 
-                    cout << "TOKEN FOUND: " << current_token << endl; // DEBUG DELETEME
+                    //cout << "TOKEN FOUND: " << current_token << endl; // DEBUG DELETEME
 
                     completed_process_diagrams++;
                     break;
@@ -93,7 +97,7 @@ int main()
                         character_to_backtrack = c;
                     }
                     
-                    cout << "TOKEN FOUND: " << current_token << endl; // DEBUG DELETEME
+                    //cout << "TOKEN FOUND: " << current_token << endl; // DEBUG DELETEME
 
                     completed_process_diagrams++;
                     break;
@@ -103,7 +107,7 @@ int main()
                         current_token = result.second.first;
                     }
 
-                    cout << "TOKEN FOUND: " << current_token << endl; // DEBUG DELETEME
+                    //cout << "TOKEN FOUND: " << current_token << endl; // DEBUG DELETEME
 
                     completed_process_diagrams++;
                     break;
