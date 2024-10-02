@@ -49,6 +49,12 @@ int main()
             current_token = "";
             character_to_backtrack = '\0';     // Still not handling when we have backtrack!
 
+            // reset diagrams
+            for (auto& diagram : diagrams) {
+                diagram.reset();
+            }
+
+
             if (character_to_backtrack == '\0') {
                 continue;
             } else {
