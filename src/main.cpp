@@ -51,7 +51,7 @@ int main()
 
             // reset diagrams
             for (auto& diagram : diagrams) {
-                diagram.reset();
+                diagram->reset();
             }
 
 
