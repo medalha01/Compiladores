@@ -51,7 +51,7 @@ int main()
             outputFile << current_token << " ";
             current_lexem = "";
             current_token = "";
-            character_to_backtrack = '\0';     // Still not handling when we have backtrack!
+            //character_to_backtrack = '\0';     
 
             // reset diagrams
             for (auto& diagram : diagrams) {
@@ -63,7 +63,7 @@ int main()
                 continue;
             } else {
                 c = character_to_backtrack;
-                character_to_backtrack == '\0';    // And execution continues using the caracter in backtrack.
+                character_to_backtrack = '\0';    // And execution continues using the caracter in backtrack.
             }
         }
 
